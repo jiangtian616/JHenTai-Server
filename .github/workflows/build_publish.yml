@@ -21,7 +21,7 @@ jobs:
     steps:
       # Checkout branch
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       # Setup Database
       - name: Setup Database
         run: |
@@ -62,8 +62,9 @@ jobs:
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.SERVER_HOST }}
+          port: ${{secrets.SERVER_PORT }}
           username: ${{ secrets.SERVER_USERNAME }}
-          key: ${{ secrets.SSH_KEY }}
+          key: ${{secrets.SERVER_PRIVATE_KEY}}
           source: /tmp/artifacts/JHenTai/*.jar
           target: /usr/local/jhentai/JHenTai.jar
       - name: SSH Deploy
