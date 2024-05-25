@@ -58,6 +58,14 @@ jobs:
           path: /tmp/artifacts
       - name: List jar
         run: ls -R /tmp/artifacts
+      - name: Upload jar
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          source: /tmp/artifacts/JHenTai/*.jar
+          target: /usr/local/jhentai/JHenTai.jar
       - name: SSH Deploy
         uses: appleboy/ssh-action@master
         with:
@@ -67,4 +75,4 @@ jobs:
           key: ${{secrets.SERVER_PRIVATE_KEY}}
           script: |
             cd /usr/local/jhentai
-            mv /tmp/artifacts/JHenTai/*.jar /usr/local/jhentai/JHenTai.jar
+            ls
