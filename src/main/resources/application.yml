@@ -1,0 +1,18 @@
+server:
+  port: 12345
+
+logging:
+  file:
+    name: info.log
+spring:
+  config:
+    # import your secret database configuration
+    import: classpath:application-database.yml
+  mvc:
+    static-path-pattern: /static/**
+  task:
+    execution:
+      pool:
+        core-size: 1
+        max-size: 2
+  

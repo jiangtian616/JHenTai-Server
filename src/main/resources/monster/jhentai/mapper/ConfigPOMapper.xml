@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="monster.jhentai.mapper.ConfigPOMapper">
+  <resultMap id="BaseResultMap" type="monster.jhentai.model.po.ConfigPO">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="share_code" jdbcType="VARCHAR" property="shareCode" />
+    <result column="identification_code" jdbcType="VARCHAR" property="identificationCode" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="version" jdbcType="VARCHAR" property="version" />
+    <result column="config" jdbcType="VARCHAR" property="config" />
+    <result column="is_deleted" jdbcType="TINYINT" property="isDeleted" />
+    <result column="ctime" jdbcType="TIMESTAMP" property="ctime" />
+    <result column="utime" jdbcType="TIMESTAMP" property="utime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, share_code, identification_code, type, version, config, is_deleted, ctime, utime
+  </sql>
+  <select id="selectByExample" parameterType="monster.jhentai.model.po.ConfigPOExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from config
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from config
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from config
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="monster.jhentai.model.po.ConfigPOExample">
+    delete from config
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="monster.jhentai.model.po.ConfigPO" useGeneratedKeys="true">
+    insert into config (share_code, identification_code, type, 
+      version, config, is_deleted, 
+      ctime, utime)
+    values (#{shareCode,jdbcType=VARCHAR}, #{identificationCode,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, 
+      #{version,jdbcType=VARCHAR}, #{config,jdbcType=VARCHAR}, #{isDeleted,jdbcType=TINYINT}, 
+      #{ctime,jdbcType=TIMESTAMP}, #{utime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="monster.jhentai.model.po.ConfigPO" useGeneratedKeys="true">
+    insert into config
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="shareCode != null">
+        share_code,
+      </if>
+      <if test="identificationCode != null">
+        identification_code,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="version != null">
+        version,
+      </if>
+      <if test="config != null">
+        config,
+      </if>
+      <if test="isDeleted != null">
+        is_deleted,
+      </if>
+      <if test="ctime != null">
+        ctime,
+      </if>
+      <if test="utime != null">
+        utime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="shareCode != null">
+        #{shareCode,jdbcType=VARCHAR},
+      </if>
+      <if test="identificationCode != null">
+        #{identificationCode,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="config != null">
+        #{config,jdbcType=VARCHAR},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=TINYINT},
+      </if>
+      <if test="ctime != null">
+        #{ctime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="utime != null">
+        #{utime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="monster.jhentai.model.po.ConfigPOExample" resultType="java.lang.Long">
+    select count(*) from config
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update config
+    <set>
+      <if test="row.id != null">
+        id = #{row.id,jdbcType=BIGINT},
+      </if>
+      <if test="row.shareCode != null">
+        share_code = #{row.shareCode,jdbcType=VARCHAR},
+      </if>
+      <if test="row.identificationCode != null">
+        identification_code = #{row.identificationCode,jdbcType=VARCHAR},
+      </if>
+      <if test="row.type != null">
+        type = #{row.type,jdbcType=INTEGER},
+      </if>
+      <if test="row.version != null">
+        version = #{row.version,jdbcType=VARCHAR},
+      </if>
+      <if test="row.config != null">
+        config = #{row.config,jdbcType=VARCHAR},
+      </if>
+      <if test="row.isDeleted != null">
+        is_deleted = #{row.isDeleted,jdbcType=TINYINT},
+      </if>
+      <if test="row.ctime != null">
+        ctime = #{row.ctime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="row.utime != null">
+        utime = #{row.utime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update config
+    set id = #{row.id,jdbcType=BIGINT},
+      share_code = #{row.shareCode,jdbcType=VARCHAR},
+      identification_code = #{row.identificationCode,jdbcType=VARCHAR},
+      type = #{row.type,jdbcType=INTEGER},
+      version = #{row.version,jdbcType=VARCHAR},
+      config = #{row.config,jdbcType=VARCHAR},
+      is_deleted = #{row.isDeleted,jdbcType=TINYINT},
+      ctime = #{row.ctime,jdbcType=TIMESTAMP},
+      utime = #{row.utime,jdbcType=TIMESTAMP}
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="monster.jhentai.model.po.ConfigPO">
+    update config
+    <set>
+      <if test="shareCode != null">
+        share_code = #{shareCode,jdbcType=VARCHAR},
+      </if>
+      <if test="identificationCode != null">
+        identification_code = #{identificationCode,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="version != null">
+        version = #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="config != null">
+        config = #{config,jdbcType=VARCHAR},
+      </if>
+      <if test="isDeleted != null">
+        is_deleted = #{isDeleted,jdbcType=TINYINT},
+      </if>
+      <if test="ctime != null">
+        ctime = #{ctime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="utime != null">
+        utime = #{utime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="monster.jhentai.model.po.ConfigPO">
+    update config
+    set share_code = #{shareCode,jdbcType=VARCHAR},
+      identification_code = #{identificationCode,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      version = #{version,jdbcType=VARCHAR},
+      config = #{config,jdbcType=VARCHAR},
+      is_deleted = #{isDeleted,jdbcType=TINYINT},
+      ctime = #{ctime,jdbcType=TIMESTAMP},
+      utime = #{utime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
