@@ -40,10 +40,10 @@ jobs:
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: JHenTai-${{ steps.get_version.outputs.version }}.jar
+          name: JHenTai
           path: target/*.jar
   Deploy:
-#    if: startsWith(github.ref, 'refs/tags/')
+    #    if: startsWith(github.ref, 'refs/tags/')
     name: Deploy
     needs: Build
     runs-on: ubuntu-latest
@@ -66,4 +66,5 @@ jobs:
           username: ${{secrets.SERVER_USERNAME}}
           key: ${{secrets.SERVER_PRIVATE_KEY}}
           script: |
-            ll
+            cd /usr/local/jhentai
+            mv /tmp/artifacts/JHenTai/*.jar /usr/local/jhentai/JHenTai.jar
