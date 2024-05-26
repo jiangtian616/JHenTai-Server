@@ -31,7 +31,7 @@ public class ConfigBiz {
     public ListConfigResponse list(ListConfigRequest request, JHenTaiUser user) {
         String identificationCode = user.toMd5();
 
-        List<ConfigPO> configPOS = configService.listConfig(request.getType(), identificationCode);
+        List<ConfigPO> configPOS = configService.listConfig(request.getType(), identificationCode, 50);
 
         List<ConfigVO> configVOS = configPOS.stream()
                 .map(this::convert2ConfigVO)

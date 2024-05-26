@@ -18,7 +18,7 @@ public class ConfigService {
     @Autowired
     private ConfigPOMapper configPOMapper;
 
-    public List<ConfigPO> listConfig(Integer type, String identificationCode) {
+    public List<ConfigPO> listConfig(Integer type, String identificationCode, int limit) {
         ConfigPOExample configPOExample = new ConfigPOExample();
         ConfigPOExample.Criteria criteria = configPOExample.createCriteria();
         if (type != null) {
@@ -26,7 +26,7 @@ public class ConfigService {
         }
         criteria.andIdentificationCodeEqualTo(identificationCode);
         criteria.andIsDeletedEqualTo(false);
-        configPOExample.setOrderByClause("ctime desc");
+        configPOExample.setOrderByClause("ctime desc limit " + limit);
 
         return configPOMapper.selectByExample(configPOExample);
     }
