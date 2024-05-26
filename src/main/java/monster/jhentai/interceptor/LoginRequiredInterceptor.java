@@ -71,7 +71,6 @@ public class LoginRequiredInterceptor implements HandlerInterceptor {
 
     private boolean checkUserValid(JHenTaiUser jHenTaiUser) {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
-        builder.setProxy$okhttp(new Proxy(Proxy.Type.HTTP, new InetSocketAddress("localhost", 7890)));
         OkHttpClient client = builder.build();
 
         HttpUrl.Builder queryUrlBuilder = HttpUrl.get(Consts.EForums).newBuilder();
