@@ -3,6 +3,7 @@ package monster.jhentai.service;
 import monster.jhentai.mapper.ConfigPOMapper;
 import monster.jhentai.model.po.ConfigPO;
 import monster.jhentai.model.po.ConfigPOExample;
+import monster.jhentai.model.response.vo.ConfigVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -48,6 +49,23 @@ public class ConfigService {
         return configPOMapper.insertSelective(configPO);
     }
 
+    public int batchInsertNewConfig(List<ConfigVO> configVOS) {
+        List<ConfigPO> configPOS = configVOS.stream()
+                .map(configVO -> {
+                    ConfigPO configPO = new ConfigPO();
+                    configPO.setType(configVO.getType());
+                    configPO.setVersion(configVO.getVersion());
+                    configPO.setConfig(configVO.getConfig());
+                    configPO.setIdentificationCode(configVO.getIdentificationCode());
+                    configPO.setShareCode(configVO.getShareCode());
+                    return configPO;
+                })
+                .toList();
+
+        return configPOMapper.batchInsertSelective(configPOS, ConfigPO.Column.type,
+                ConfigPO.Column.version, ConfigPO.Column.config, ConfigPO.Column.identificationCode, ConfigPO.Column.shareCode);
+    }
+
     public int deleteConfig(Long id, String identificationCode) {
         ConfigPOExample configPOExample = new ConfigPOExample();
         configPOExample.createCriteria().andIdEqualTo(id).andIdentificationCodeEqualTo(identificationCode);
@@ -56,4 +74,5 @@ public class ConfigService {
         configPO.setIsDeleted(true);
         return configPOMapper.updateByExampleSelective(configPO, configPOExample);
     }
+
 }

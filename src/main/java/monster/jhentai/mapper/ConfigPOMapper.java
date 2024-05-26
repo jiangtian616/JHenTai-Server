@@ -27,4 +27,8 @@ public interface ConfigPOMapper {
     int updateByPrimaryKeySelective(ConfigPO row);
 
     int updateByPrimaryKey(ConfigPO row);
+
+    int batchInsert(@Param("list") List<ConfigPO> list);
+
+    int batchInsertSelective(@Param("list") List<ConfigPO> list, @Param("selective") ConfigPO.Column ... selective);
 }

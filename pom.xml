@@ -86,6 +86,11 @@
                         <artifactId>mysql-connector-java</artifactId>
                         <version>5.1.49</version>
                     </dependency>
+                    <dependency>
+                        <groupId>com.itfsw</groupId>
+                        <artifactId>mybatis-generator-plugin</artifactId>
+                        <version>1.4.6</version>
+                    </dependency>
                 </dependencies>
             </plugin>
         </plugins>

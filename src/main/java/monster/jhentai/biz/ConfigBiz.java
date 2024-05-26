@@ -4,8 +4,8 @@ package monster.jhentai.biz;
 import lombok.extern.slf4j.Slf4j;
 import monster.jhentai.model.bo.JHenTaiUser;
 import monster.jhentai.model.po.ConfigPO;
+import monster.jhentai.model.request.BatchUploadConfigRequest;
 import monster.jhentai.model.request.ListConfigRequest;
-import monster.jhentai.model.request.UploadConfigRequest;
 import monster.jhentai.model.response.ConfigResponse;
 import monster.jhentai.model.response.ListConfigResponse;
 import monster.jhentai.model.response.UploadConfigResponse;
@@ -46,13 +46,21 @@ public class ConfigBiz {
         return new ConfigResponse(convert2ConfigVO(configPO));
     }
 
-    public UploadConfigResponse upload(UploadConfigRequest request, JHenTaiUser user) {
+    public UploadConfigResponse upload(BatchUploadConfigRequest request, JHenTaiUser user) {
         String identificationCode = user.toMd5();
-        String shareCode = UUID.randomUUID().toString();
 
-        configService.insertNewConfig(request.getType(), request.getVersion(), request.getConfig(), identificationCode, shareCode);
+        List<ConfigVO> configVOS = request.getConfigs().stream()
+                .map(config -> ConfigVO.builder()
+                        .type(config.getType())
+                        .version(config.getVersion())
+                        .config(config.getConfig())
+                        .identificationCode(identificationCode)
+                        .shareCode(UUID.randomUUID().toString())
+                        .build())
+                .toList();
+        configService.batchInsertNewConfig(configVOS);
 
-        return new UploadConfigResponse(identificationCode, shareCode);
+        return new UploadConfigResponse(identificationCode);
     }
 
     public void deleteConfig(Long id, JHenTaiUser user) {

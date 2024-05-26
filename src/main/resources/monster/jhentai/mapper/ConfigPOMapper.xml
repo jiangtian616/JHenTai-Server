@@ -264,4 +264,54 @@
       utime = #{utime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  <insert id="batchInsert" keyColumn="id" keyProperty="id" parameterType="map" useGeneratedKeys="true">
+    insert into config
+    (share_code, identification_code, type, version, config, is_deleted, ctime, utime
+      )
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.shareCode,jdbcType=VARCHAR}, #{item.identificationCode,jdbcType=VARCHAR}, 
+        #{item.type,jdbcType=INTEGER}, #{item.version,jdbcType=VARCHAR}, #{item.config,jdbcType=VARCHAR}, 
+        #{item.isDeleted,jdbcType=TINYINT}, #{item.ctime,jdbcType=TIMESTAMP}, #{item.utime,jdbcType=TIMESTAMP}
+        )
+    </foreach>
+  </insert>
+  <insert id="batchInsertSelective" keyColumn="id" keyProperty="list.id" parameterType="map" useGeneratedKeys="true">
+    insert into config (
+    <foreach collection="selective" item="column" separator=",">
+      ${column.escapedColumnName}
+    </foreach>
+    )
+    values
+    <foreach collection="list" item="item" separator=",">
+      (
+      <foreach collection="selective" item="column" separator=",">
+        <if test="'share_code'.toString() == column.value">
+          #{item.shareCode,jdbcType=VARCHAR}
+        </if>
+        <if test="'identification_code'.toString() == column.value">
+          #{item.identificationCode,jdbcType=VARCHAR}
+        </if>
+        <if test="'type'.toString() == column.value">
+          #{item.type,jdbcType=INTEGER}
+        </if>
+        <if test="'version'.toString() == column.value">
+          #{item.version,jdbcType=VARCHAR}
+        </if>
+        <if test="'config'.toString() == column.value">
+          #{item.config,jdbcType=VARCHAR}
+        </if>
+        <if test="'is_deleted'.toString() == column.value">
+          #{item.isDeleted,jdbcType=TINYINT}
+        </if>
+        <if test="'ctime'.toString() == column.value">
+          #{item.ctime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="'utime'.toString() == column.value">
+          #{item.utime,jdbcType=TIMESTAMP}
+        </if>
+      </foreach>
+      )
+    </foreach>
+  </insert>
 </mapper>

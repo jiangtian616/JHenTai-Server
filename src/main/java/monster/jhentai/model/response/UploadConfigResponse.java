@@ -16,6 +16,4 @@ import lombok.NoArgsConstructor;
 public class UploadConfigResponse {
 
     private String identificationCode;
-
-    private String shareCode;
 }

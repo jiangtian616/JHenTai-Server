@@ -6,6 +6,7 @@ import monster.jhentai.biz.ConfigBiz;
 import monster.jhentai.enums.ErrorCodeEnum;
 import monster.jhentai.exception.CheckArgumentException;
 import monster.jhentai.model.bo.JHenTaiUser;
+import monster.jhentai.model.request.BatchUploadConfigRequest;
 import monster.jhentai.model.request.GetConfigRequest;
 import monster.jhentai.model.request.ListConfigRequest;
 import monster.jhentai.model.request.UploadConfigRequest;
@@ -15,6 +16,7 @@ import monster.jhentai.model.response.Result;
 import monster.jhentai.model.response.UploadConfigResponse;
 import monster.jhentai.threadlocal.JHenTaiUserThreadLocal;
 import monster.jhentai.util.CheckUtil;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -72,16 +74,19 @@ public class ConfigController {
 
     @LoginRequired
     @PostMapping("/upload")
-    public Result<UploadConfigResponse> upload(@RequestBody UploadConfigRequest request) {
+    public Result<UploadConfigResponse> upload(@RequestBody BatchUploadConfigRequest request) {
         JHenTaiUser user = JHenTaiUserThreadLocal.get();
         log.info("ConfigController.upload, user:{}, request:{}", user.toMd5(), request);
 
         UploadConfigResponse response = null;
         try {
             CheckUtil.checkArgument(request != null, "request is null");
-            CheckUtil.checkArgument(request.getType() != null, "type is null");
-            CheckUtil.checkArgument(request.getVersion() != null, "version is null");
-            CheckUtil.checkArgument(request.getConfig() != null, "config is null");
+            CheckUtil.checkArgument(CollectionUtils.isNotEmpty(request.getConfigs()), "configs is null");
+            for (UploadConfigRequest config : request.getConfigs()) {
+                CheckUtil.checkArgument(config.getType() != null, "type is null");
+                CheckUtil.checkArgument(config.getVersion() != null, "version is null");
+                CheckUtil.checkArgument(config.getConfig() != null, "config is null");
+            }
 
             response = configBiz.upload(request, user);
             return Result.success(response);
