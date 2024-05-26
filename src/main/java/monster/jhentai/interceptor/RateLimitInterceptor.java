@@ -32,7 +32,7 @@ public class RateLimitInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String clientIp = IpUtil.getClientIpAddress(request);
-        RateLimiter rateLimiter = limiters.get(clientIp, () -> RateLimiter.create(3));
+        RateLimiter rateLimiter = limiters.get(clientIp, () -> RateLimiter.create(5));
 
         if (!rateLimiter.tryAcquire()) {
             log.warn("RateLimitInterceptor preHandle failed, rate limit, uri:{}, ip:{}", request.getRequestURI(), clientIp);
