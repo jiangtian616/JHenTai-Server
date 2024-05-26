@@ -45,7 +45,7 @@ public class ConfigController {
             log.error("ConfigController.list error", e);
             return Result.error();
         } finally {
-            log.info("ConfigController.list, user:{}, response:{}", user.toMd5(), response != null);
+            log.info("ConfigController.list, user:{}, response size:{}", user.toMd5(), response != null ? response.getConfigs().size() : 0);
         }
     }
 
