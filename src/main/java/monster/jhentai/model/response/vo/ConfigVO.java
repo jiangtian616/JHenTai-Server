@@ -30,5 +30,5 @@ public class ConfigVO {
 
     private String config;
 
-    private Date ctime;
+    private Long ctime;
 }

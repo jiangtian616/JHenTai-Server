@@ -74,7 +74,7 @@ public class ConfigBiz {
                 .type(configPO.getType())
                 .version(configPO.getVersion())
                 .config(configPO.getConfig())
-                .ctime(configPO.getCtime())
+                .ctime(configPO.getCtime().getTime())
                 .identificationCode(configPO.getIdentificationCode())
                 .shareCode(configPO.getShareCode())
                 .build();
