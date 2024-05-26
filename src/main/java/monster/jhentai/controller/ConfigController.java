@@ -97,7 +97,7 @@ public class ConfigController {
             log.error("ConfigController.upload error", e);
             return Result.error();
         } finally {
-            log.info("ConfigController.upload, user:{}, request:{}, response:{}", user.toMd5(), request, response);
+            log.info("ConfigController.upload, user:{}, request size:{}, response:{}", user.toMd5(), request == null ? 0 : request.getConfigs().size(), response);
         }
     }
 
