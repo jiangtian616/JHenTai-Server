@@ -3,6 +3,7 @@ package monster.jhentai.controller;
 import lombok.extern.slf4j.Slf4j;
 import monster.jhentai.annotation.LoginRequired;
 import monster.jhentai.biz.ConfigBiz;
+import monster.jhentai.enums.ConfigTypeEnum;
 import monster.jhentai.enums.ErrorCodeEnum;
 import monster.jhentai.exception.CheckArgumentException;
 import monster.jhentai.model.bo.JHenTaiUser;
@@ -84,8 +85,10 @@ public class ConfigController {
             CheckUtil.checkArgument(CollectionUtils.isNotEmpty(request.getConfigs()), "configs is null");
             for (UploadConfigRequest config : request.getConfigs()) {
                 CheckUtil.checkArgument(config.getType() != null, "type is null");
+                CheckUtil.checkArgument(ConfigTypeEnum.getByCode(config.getType()) != null, "type is unknown");
                 CheckUtil.checkArgument(config.getVersion() != null, "version is null");
                 CheckUtil.checkArgument(config.getConfig() != null, "config is null");
+
             }
 
             response = configBiz.upload(request, user);
