@@ -22,6 +22,7 @@ import java.util.UUID;
  * @author JTMonster
  * @date 2024/5/25
  */
+@Deprecated
 @Service
 @Slf4j
 public class ConfigBiz {

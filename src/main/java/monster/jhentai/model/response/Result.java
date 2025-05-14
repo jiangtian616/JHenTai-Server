@@ -20,6 +20,10 @@ public class Result<T> {
         this.data = data;
     }
 
+    public boolean isSuccess() {
+        return code == 0;
+    }
+
     public int getCode() {
         return code;
     }

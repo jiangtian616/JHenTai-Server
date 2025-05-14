@@ -16,11 +16,26 @@ import monster.jhentai.util.MD5Util;
 @Builder
 public class JHenTaiUser {
 
-    private String memberId;
+    private String ipbMemberId;
 
-    private String passHash;
+    private String ipbPassHash;
+
+    private String userName;
 
     public String toMd5() {
-        return MD5Util.encode(memberId + passHash);
+        return MD5Util.encode(ipbMemberId + ipbPassHash);
+    }
+
+    public JHenTaiUser copy() {
+        return JHenTaiUser.builder()
+                .ipbMemberId(ipbMemberId)
+                .ipbPassHash(ipbPassHash)
+                .build();
+    }
+
+    public JHenTaiUser safeLog() {
+        return JHenTaiUser.builder()
+                .userName(userName)
+                .build();
     }
 }

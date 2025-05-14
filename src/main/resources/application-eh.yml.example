@@ -1,0 +1,5 @@
+eh:
+  cookie:
+    memberId: 123456
+    passHash: abc
+    igneous: xyz

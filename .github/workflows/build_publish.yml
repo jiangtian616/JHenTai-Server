@@ -22,10 +22,11 @@ jobs:
       # Checkout branch
       - name: Checkout
         uses: actions/checkout@v4
-      # Setup Database
+      # Setup Secret Config
       - name: Setup Database
         run: |
           echo "${{ secrets.DATABASE_CONFIG_FILE }}" > src/main/resources/application-database.yml
+          echo "${{ secrets.EH_COOKIE_CONFIG_FILE }}" > src/main/resources/application-eh.yml
       # Setup JDK
       - name: Setup JDK 17
         uses: actions/setup-java@v3

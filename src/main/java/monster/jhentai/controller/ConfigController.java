@@ -26,8 +26,9 @@ import org.springframework.web.bind.annotation.*;
  * @author JTMonster
  * @date 2024/5/25
  */
-@RestController
-@RequestMapping("/api/config/")
+//@RestController
+//@RequestMapping("/api/config/")
+@Deprecated
 @Slf4j
 public class ConfigController {
 

@@ -36,8 +36,14 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
 /src/main/resources/generatorConfig.xml
 /src/main/resources/application-database.yml
+/src/main/resources/application-eh.yml
 /application.log
+/application.*.log
 /application_error.log
+/application_error.*.log
 /application_warn.log
+/application_warn.*.log
+

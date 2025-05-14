@@ -5,9 +5,13 @@ logging:
   file:
     name: info.log
 spring:
+  web:
+    locale: en_US
   config:
     # import your secret database configuration
-    import: classpath:application-database.yml
+    import:
+      - classpath:application-database.yml
+      - classpath:application-eh.yml
   mvc:
     static-path-pattern: /static/**
   task:
@@ -15,4 +19,3 @@ spring:
       pool:
         core-size: 1
         max-size: 2
-  
