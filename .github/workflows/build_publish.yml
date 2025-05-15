@@ -23,7 +23,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       # Setup Secret Config
-      - name: Setup Database
+      - name: Setup Secret Config
         run: |
           echo "${{ secrets.DATABASE_CONFIG_FILE }}" > src/main/resources/application-database.yml
           echo "${{ secrets.EH_COOKIE_CONFIG_FILE }}" > src/main/resources/application-eh.yml
