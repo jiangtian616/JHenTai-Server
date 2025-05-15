@@ -62,6 +62,8 @@ jobs:
           MATRIX_JSON=$(echo '${{ secrets.SERVERS_CONFIG }}' | jq -c '.')
           echo "SERVERS length: $(echo "$MATRIX_JSON" | jq 'length')"
           echo "matrix=$MATRIX_JSON" >> $GITHUB_OUTPUT
+      - run: |
+          echo "Final Output: ${{ steps.set-matrix.outputs.matrix }}"
   Deploy:
     name: Deploy to Servers
     needs: [ Build, GenerateMatrix ]
