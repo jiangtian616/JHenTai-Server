@@ -59,7 +59,9 @@ jobs:
           echo "Array length:"
           echo '${{ secrets.SERVERS_CONFIG }}' | jq 'length'
           
-          echo "matrix=${{ secrets.SERVERS_CONFIG }}" >> $GITHUB_OUTPUT
+          MATRIX_JSON=$(echo '${{ secrets.SERVERS_CONFIG }}' | jq -c '.')
+          echo "SERVERS length: $(echo "$MATRIX_JSON" | jq 'length')"
+          echo "matrix=$MATRIX_JSON" >> $GITHUB_OUTPUT
   Deploy:
     name: Deploy to Servers
     needs: [ Build, GenerateMatrix ]
