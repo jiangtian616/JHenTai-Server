@@ -56,7 +56,6 @@ jobs:
           json=$(echo '${{ secrets.SERVERS_CONFIG }}' | jq -c '{server: .}')
           echo "matrix=$json" >> "$GITHUB_OUTPUT"
   Deploy:
-    if: startsWith(github.ref, 'refs/tags/')
     name: Deploy to Servers
     needs: [ Build, GenerateMatrix ]
     runs-on: ubuntu-latest
