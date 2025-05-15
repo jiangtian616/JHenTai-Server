@@ -27,6 +27,7 @@ jobs:
         run: |
           echo "${{ secrets.DATABASE_CONFIG_FILE }}" > src/main/resources/application-database.yml
           echo "${{ secrets.EH_COOKIE_CONFIG_FILE }}" > src/main/resources/application-eh.yml
+          echo "${{ secrets.API_KEY_CONFIG_FILE }}" > src/main/resources/application-apiKey.yml
       # Setup JDK
       - name: Setup JDK 17
         uses: actions/setup-java@v3
