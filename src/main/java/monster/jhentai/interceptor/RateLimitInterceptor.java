@@ -36,9 +36,8 @@ public class RateLimitInterceptor implements HandlerInterceptor {
 
         if (!rateLimiter.tryAcquire()) {
             log.warn("RateLimitInterceptor preHandle failed, rate limit, uri:{}, ip:{}", request.getRequestURI(), clientIp);
-            response.setStatus(HttpStatus.TOO_MANY_REQUESTS.value());
             response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-            JSON.writeJSONString(response.getOutputStream(), Result.error(HttpStatus.TOO_MANY_REQUESTS.getReasonPhrase()));
+            JSON.writeJSONString(response.getOutputStream(), Result.error(HttpStatus.TOO_MANY_REQUESTS.value(), HttpStatus.TOO_MANY_REQUESTS.getReasonPhrase()));
             response.getOutputStream().flush();
             return false;
         }
