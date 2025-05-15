@@ -7,7 +7,6 @@ import org.apache.commons.collections4.MapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
 
 @Service
 @Slf4j
@@ -17,7 +16,6 @@ public class ApiKeyService {
     private ApiKeyConfig apiKeyConfig;
 
     public static final long EXPIRATION_SECONDS = 5 * 60;
-
 
     public boolean validateSignature(String appId, long timestamp, String nonce, String signature) {
         try {
@@ -32,8 +30,8 @@ public class ApiKeyService {
                 return false;
             }
 
-            long now = Instant.now().getEpochSecond();
-            if (Math.abs(now - timestamp) > EXPIRATION_SECONDS) {
+            long now = System.currentTimeMillis();
+            if (Math.abs(now - timestamp) > EXPIRATION_SECONDS * 1000) {
                 log.warn("Timestamp expired: {}", timestamp);
                 return false;
             }
