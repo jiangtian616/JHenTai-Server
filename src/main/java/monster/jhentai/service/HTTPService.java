@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Proxy;
+import java.net.SocketAddress;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -29,7 +30,9 @@ public class HTTPService {
 
     public <T> T get(String url, Map<String, String> headers, Map<String, String> queryParams,
                      int timeoutMs, EHPageParser<T> parser) throws IOException {
-        OkHttpClient client = new OkHttpClient.Builder().build();
+        OkHttpClient client = new OkHttpClient.Builder()
+                .proxy(new Proxy(Proxy.Type.HTTP, new InetSocketAddress("localhost", 7890)))
+                .build();
 
         HttpUrl.Builder urlBuilder = HttpUrl.get(url).newBuilder();
         if (queryParams != null) {

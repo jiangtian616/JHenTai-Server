@@ -12,6 +12,7 @@ spring:
     import:
       - classpath:application-database.yml
       - classpath:application-eh.yml
+      - classpath:application-apiKey.yml
   mvc:
     static-path-pattern: /static/**
   task:

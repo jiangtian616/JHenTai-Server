@@ -1,5 +1,6 @@
 package monster.jhentai.config;
 
+import monster.jhentai.interceptor.ApiKeyInterceptor;
 import monster.jhentai.interceptor.JHenTaiUserInterceptor;
 import monster.jhentai.interceptor.LoginRequiredInterceptor;
 import monster.jhentai.interceptor.RateLimitInterceptor;
@@ -21,11 +22,14 @@ public class WebConfig implements WebMvcConfigurer {
     private JHenTaiUserInterceptor jHenTaiUserInterceptor;
     @Autowired
     private LoginRequiredInterceptor loginRequiredInterceptor;
+    @Autowired
+    private ApiKeyInterceptor apiKeyInterceptor;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(rateLimitInterceptor).addPathPatterns("/**").excludePathPatterns("/static/**").order(0);
         registry.addInterceptor(jHenTaiUserInterceptor).addPathPatterns("/**").excludePathPatterns("/static/**").order(1);
         registry.addInterceptor(loginRequiredInterceptor).addPathPatterns("/**").excludePathPatterns("/static/**").order(2);
+        registry.addInterceptor(apiKeyInterceptor).addPathPatterns("/**").excludePathPatterns("/static/**").order(3);
     }
 }

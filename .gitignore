@@ -40,6 +40,7 @@ build/
 /src/main/resources/generatorConfig.xml
 /src/main/resources/application-database.yml
 /src/main/resources/application-eh.yml
+/src/main/resources/application-apiKey.yml
 /application.log
 /application.*.log
 /application_error.log

@@ -1,5 +1,6 @@
 package monster.jhentai.controller;
 
+import monster.jhentai.annotation.ApiKeyRequired;
 import monster.jhentai.annotation.LogAndCatch;
 import monster.jhentai.annotation.LoginRequired;
 import monster.jhentai.biz.EHBiz;
@@ -18,10 +19,6 @@ import jakarta.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 
-/**
- * @author JTMonster
- * @date 2025/5/14
- */
 @RestController
 @RequestMapping("/api/gallery")
 @LogAndCatch
@@ -32,6 +29,7 @@ public class GalleryController {
 
 
     @LoginRequired
+    @ApiKeyRequired
     @GetMapping("/fetchImageHash")
     public Result<FetchImageHashResponse> fetchImageHash(@Valid FetchImageHashRequest request) throws IOException {
         List<String> hashes = ehBiz.requestMPVPage(request.getGid(), request.getToken(), new MPVPageParser());
@@ -42,4 +40,4 @@ public class GalleryController {
         FetchImageHashResponse response = FetchImageHashResponse.builder().hashes(hashes).build();
         return Result.success(response);
     }
-}
+} 
