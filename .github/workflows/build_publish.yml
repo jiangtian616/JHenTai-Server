@@ -61,7 +61,7 @@ jobs:
     needs: [ Build, GenerateMatrix ]
     runs-on: ubuntu-latest
     strategy:
-      matrix: ${{ fromJSON(needs.GenerateMatrix.outputs.matrix) }}
+      matrix: ${{ fromJson(needs.GenerateMatrix.outputs.matrix) }}
     steps:
       - name: Download jar
         uses: actions/download-artifact@v4
