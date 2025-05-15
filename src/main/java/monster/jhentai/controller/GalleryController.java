@@ -28,7 +28,6 @@ public class GalleryController {
     private EHBiz ehBiz;
 
 
-    @LoginRequired
     @ApiKeyRequired
     @GetMapping("/fetchImageHash")
     public Result<FetchImageHashResponse> fetchImageHash(@Valid FetchImageHashRequest request) throws IOException {
