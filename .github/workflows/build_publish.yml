@@ -53,8 +53,9 @@ jobs:
       - name: Generate matrix from secrets
         id: set-matrix
         run: |
-          json=$(echo '${{ secrets.SERVERS_CONFIG }}' | jq -c '{server: .}')
-          echo "matrix=$json" >> "$GITHUB_OUTPUT"
+          echo '${{ secrets.SERVERS_CONFIG }}' | jq empty  # 检查 JSON 是否合法
+          matrix=$(echo '${{ secrets.SERVERS_CONFIG }}' | jq -c '{server: .}')
+          echo "matrix=$matrix" >> $GITHUB_OUTPUT
   Deploy:
     name: Deploy to Servers
     needs: [ Build, GenerateMatrix ]
