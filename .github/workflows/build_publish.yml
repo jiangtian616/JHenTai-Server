@@ -53,15 +53,15 @@ jobs:
       - name: Generate matrix from secrets
         id: set-matrix
         run: |
-          echo '${{ secrets.SERVERS_CONFIG }}' | jq empty  # 检查 JSON 是否合法
-          matrix=$(echo '${{ secrets.SERVERS_CONFIG }}' | jq -c '{server: .}')
+          echo '${{ secrets.SERVERS_CONFIG }}' | jq empty  # Validate JSON
+          matrix=$(echo '${{ secrets.SERVERS_CONFIG }}' | jq -c '.')
           echo "matrix=$matrix" >> $GITHUB_OUTPUT
   Deploy:
     name: Deploy to Servers
     needs: [ Build, GenerateMatrix ]
     runs-on: ubuntu-latest
     strategy:
-      matrix: ${{ fromJson(needs.GenerateMatrix.outputs.matrix) }}
+      matrix: ${{ fromJSON(needs.GenerateMatrix.outputs.matrix) }}
     steps:
       - name: Download jar
         uses: actions/download-artifact@v4
@@ -73,19 +73,19 @@ jobs:
       - name: SSH Upload jar
         uses: appleboy/scp-action@master
         with:
-          host: ${{ matrix.server.host }}
-          port: ${{ matrix.server.port }}
-          username: ${{ matrix.server.username }}
-          key: ${{ matrix.server.key }}
+          host: ${{ matrix.host }}
+          port: ${{ matrix.port }}
+          username: ${{ matrix.username }}
+          key: ${{ matrix.key }}
           source: ./*
           target: /usr/local/jhentai/
       - name: SSH Deploy
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ matrix.server.host }}
-          port: ${{ matrix.server.port }}
-          username: ${{ matrix.server.username }}
-          key: ${{ matrix.server.key }}
+          host: ${{ matrix.host }}
+          port: ${{ matrix.port }}
+          username: ${{ matrix.username }}
+          key: ${{ matrix.key }}
           command_timeout: 30s
           script: |
             cd /usr/local/jhentai
