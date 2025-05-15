@@ -30,9 +30,7 @@ public class HTTPService {
 
     public <T> T get(String url, Map<String, String> headers, Map<String, String> queryParams,
                      int timeoutMs, EHPageParser<T> parser) throws IOException {
-        OkHttpClient client = new OkHttpClient.Builder()
-                .proxy(new Proxy(Proxy.Type.HTTP, new InetSocketAddress("localhost", 7890)))
-                .build();
+        OkHttpClient client = new OkHttpClient.Builder().build();
 
         HttpUrl.Builder urlBuilder = HttpUrl.get(url).newBuilder();
         if (queryParams != null) {
