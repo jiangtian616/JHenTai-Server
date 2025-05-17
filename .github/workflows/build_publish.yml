@@ -45,6 +45,7 @@ jobs:
           name: JHenTai
           path: target/*.jar
   Deploy:
+    if: startsWith(github.ref, 'refs/tags/')
     name: Deploy
     needs: Build
     runs-on: ubuntu-latest
